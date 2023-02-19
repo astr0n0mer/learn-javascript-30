@@ -1,0 +1,93 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <title>Console Tricks!</title>
+    <link rel="icon" href="https://fav.farm/🔥" />
+  </head>
+  <body>
+    <p onClick="makeGreen()">×BREAK×DOWN×</p>
+
+    <script>
+      const dogs = [
+        { name: "Snickers", age: 2 },
+        { name: "Hugo", age: 8 },
+      ];
+
+      function makeGreen() {
+        const p = document.querySelector("p");
+        p.style.color = "#BADA55";
+        p.style.fontSize = "50px";
+      }
+
+      const p = document.querySelector("p");
+
+      // Regular
+      console.log("Hello");
+
+      // Interpolated
+      console.log("I am an %s string", "interpolated");
+
+      // Styled
+      console.log(
+        "%cI am a styled string",
+        "font-size: 20px; color: yellowgreen; text-decoration: underline;"
+      );
+
+      // warning!
+      console.warn("Be careful here!!");
+
+      // Error :|
+      console.error(
+        "What could go wrong🙃%c*blast noises*",
+        "font-style: italic;"
+      );
+
+      // Info
+      console.info(
+        "Javascript is fun\n%c*cries in a corner*",
+        "font-style:italic;"
+      );
+
+      // Testing
+      console.assert(1 === 2, "The comparison returned false");
+
+      // clearing
+      //   console.clear();
+
+      // Viewing DOM Elements
+      console.log(p);
+      console.dir(p);
+
+      // Grouping together
+      dogs.forEach((dog) => {
+        console.groupCollapsed(`${dog.name}`);
+        console.log(`This is ${dog.name}`);
+        console.log(`${dog.name} is ${dog.age * 7} dog years old`);
+        console.groupEnd(`${dog.name}`);
+      });
+
+      // counting
+      console.count("John");
+      console.count("Doe");
+      console.count("John");
+      console.count("John");
+      console.count("Doe");
+      console.count("John");
+
+      // timing
+      console.time("fetch from github");
+      fetch("https://api.github.com/users/astr0n0mer/repos")
+        .then((blob) => blob.json())
+        .then((data) => {
+          //   console.log(data);
+          console.groupCollapsed("astr0n0mer's repositories");
+          data.forEach((repo) => console.log(repo.name));
+          console.groupEnd("astr0n0mer's repositories");
+          console.timeEnd("fetch from github");
+        });
+
+      console.table(dogs);
+    </script>
+  </body>
+</html>

@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <title>JS Reference VS Copy</title>
+    <link rel="icon" href="https://fav.farm/🔥" />
+  </head>
+  <body>
+    <script>
+      // start with strings, numbers and booleans
+
+      // Let's say we have an array
+      const players = ["Wes", "Sarah", "Ryan", "Poppy"];
+
+      // and we want to make a copy of it.
+
+      // You might think we can just do something like this:
+
+      // however what happens when we update that array?
+
+      // now here is the problem!
+
+      // oh no - we have edited the original array too!
+
+      // Why? It's because that is an array reference, not an array copy. They both point to the same array!
+
+      // So, how do we fix this? We take a copy instead!
+
+      // one way
+      const players2 = players.slice();
+
+      // or create a new array and concat the old one in
+      const players3 = [].concat(players);
+
+      // or use the new ES6 Spread
+      const players4 = [...players];
+
+      console.log("Before modification");
+      console.table({ players, players2, players3, players4 });
+
+      // now when we update it, the original one isn't changed
+      players2.push("B");
+      players3.push("C");
+      players4.push("D");
+
+      console.log("After modification");
+      console.table({ players, players2, players3, players4 });
+
+      // The same thing goes for objects, let's say we have a person object
+
+      // with Objects
+      const person = {
+        name: "Wes Bos",
+        age: 80,
+      };
+
+      // and think we make a copy:
+
+      // how do we take a copy instead?
+      const person2 = Object.assign({}, person, { number: 99 });
+
+      console.table({ person, person2 });
+
+      // We will hopefully soon see the object ...spread
+      //   const person3 = {...person };
+
+      // Things to note - this is only 1 level deep - both for Arrays and Objects. lodash has a cloneDeep method, but you should think twice before using it.
+      const dev = {
+        name: "John",
+        age: 25,
+        visualAge: 70,
+        social: { github: "astr0n0mer", twitter: "astronomer404" },
+      };
+      const dev2 = Object.assign({}, dev);
+      const dev3 = JSON.parse(JSON.stringify(dev));
+
+      console.log("Before modification");
+      console.table({ dev, dev2, dev3 });
+
+      dev2.name = "Abraham";
+      dev3.name = "Smith";
+      dev2.social.twitter = "my_new_twitter_username";
+      dev3.social.twitter = "cool_twitter_username";
+
+      console.log("After modification");
+      console.table({ dev, dev2, dev3 });
+    </script>
+  </body>
+</html>

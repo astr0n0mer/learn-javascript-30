@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <title>Type Ahead 👀</title>
+    <link rel="stylesheet" href="style.css" />
+    <link rel="icon" href="https://fav.farm/🔥" />
+  </head>
+  <body>
+    <form class="search-form">
+      <input type="text" class="search" placeholder="City or State" />
+      <ul class="suggestions">
+        <li>Filter for a city</li>
+        <li>or a state</li>
+      </ul>
+    </form>
+    <script>
+      "use strict";
+
+      const endpoint =
+        "https://gist.githubusercontent.com/Miserlou/c5cd8364bf9b2420bb29/raw/2bf258763cdddd704f8ffd3ea9a3e81d25e2c6f6/cities.json";
+      const cities = [];
+      fetch(endpoint)
+        .then((blob) => blob.json())
+        .then((data) => cities.push(...data));
+
+      const search = document.querySelector(".search");
+      const suggestion = document.querySelector(".suggestions");
+      search.addEventListener("change", displayCities);
+      search.addEventListener("keyup", displayCities);
+
+      function displayCities() {
+        const filteredCities = filterCities(this.value, cities);
+        const html = filteredCities
+          .map((place) => {
+            const regex = new RegExp(this.value, "gi");
+            const city =  place.city.replace(regex, `<span class="hl">${this.value.toLowerCase()}</span>`);
+            const state = place.state.replace(regex, `<span class="hl">${this.value.toLowerCase()}</span>`);
+            const population = Number(place.population).toLocaleString();
+
+            return `<li>
+                        <span class="name">${city}, ${state}</span>
+                        <span class="population">${population}</span>
+                    </li>`;
+          })
+          .join("");
+        suggestion.innerHTML = html;
+      }
+
+      function filterCities(textToMatch, cities) {
+        return cities.filter((place) => {
+          const regex = new RegExp(textToMatch, "gi");
+          return place.city.match(regex) || place.state.match(regex);
+        });
+      }
+    </script>
+  </body>
+</html>
