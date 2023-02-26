@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <title>Understanding JavaScript's Capture</title>
+    <link rel="icon" href="https://fav.farm/🔥" />
+  </head>
+  <body class="bod">
+    <div class="outer">
+      <div class="middle">
+        <div class="inner"></div>
+      </div>
+    </div>
+    <button>Clicks left: 1</button>
+
+    <style>
+      html {
+        box-sizing: border-box;
+      }
+
+      *,
+      *:before,
+      *:after {
+        box-sizing: inherit;
+      }
+
+      div {
+        width: 100%;
+        padding: 100px;
+      }
+
+      .outer {
+        background: thistle;
+      }
+
+      .middle {
+        background: mistyrose;
+      }
+
+      .inner {
+        background: coral;
+      }
+    </style>
+
+    <script>
+      const divs = document.querySelectorAll("div");
+      divs.forEach((div) => {
+        div.addEventListener("click", logText);
+        // div.addEventListener("click", logText, { capture: true });
+      });
+
+      const button = document.querySelector("button");
+      button.addEventListener(
+        "click",
+        () => {
+          button.innerText = "Clicks left: 0";
+          console.log("Button is clicked");
+          //   button.disabled = true;
+        },
+        { once: true }
+      );
+
+      function logText(e) {
+        console.log(this.classList.value);
+        // stopPropagation() basically stops the event movement up or down whenever the event first executes
+        // capture: true just makes the event execute during capture
+        // e.stopPropagation();
+      }
+    </script>
+  </body>
+</html>

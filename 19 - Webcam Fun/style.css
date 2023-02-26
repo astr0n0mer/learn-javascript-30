@@ -26,7 +26,8 @@ html {
 }
 
 .photo {
-  width: 100%;
+  /* width: 100%; */
+  width: 60%;
   float: left;
 }
 
